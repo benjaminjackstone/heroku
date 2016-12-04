@@ -70,7 +70,7 @@ var signIn = function(success, failure){
       }
     }
   };
-  request.open("POST", "http://localhost:8080/users/"+email);
+  request.open("POST", "https://deploy-my-app.herokuapp.com/users/"+email);
   request.withCredentials = true;
   request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   request.send("email="+email+"&encryptedpass="+password);
@@ -94,7 +94,7 @@ function InitialGet(){
       }
     }
   };
-request.open("GET", "http://localhost:8080/customers");
+request.open("GET", "https://deploy-my-app.herokuapp.com/customers");
 request.withCredentials = true;
 request.send();
 };
@@ -114,7 +114,7 @@ var addUser = function (success, failure){
     console.log(password);
     console.log(fname);
     console.log(lname);
-    post.open("POST", "http://localhost:8080/users");
+    post.open("POST", "https://deploy-my-app.herokuapp.com");
     post.withCredentials = true;
     post.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     post.send("email="+email+"&encryptedpass="+password+"&fname="+fname+"&lname="+lname);
