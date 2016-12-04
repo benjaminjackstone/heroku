@@ -1,0 +1,18 @@
+import random
+def buildname():
+    alpha = 'abcdefghijklmnopqrstuvwxyz'
+    l = random.randrange(1, 10)
+    name = ""
+    for i in range(l):
+        r = random.randrange(26)
+        name += alpha[r]
+    return name;
+def printstudents():
+    fin = open('names2.txt','w')
+    for i in range(3000000):
+        lname = buildname()
+        fname = buildname()
+        fin.write("INSERT INTO classlarge VALUES(ROW('"+fname+"', '"+lname+"'));")
+        # fin.write("INSERT INTO relationalclasslarge VALUES('"+fname+"', '"+lname+"');")
+    fin.close()
+printstudents()

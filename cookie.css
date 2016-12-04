@@ -1,0 +1,13 @@
+
+#registerBox{
+  display: none;
+}
+
+#register{
+  cursor: pointer;
+}
+
+body{
+  text-align: center;
+  background: gray;
+}

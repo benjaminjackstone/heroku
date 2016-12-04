@@ -1,0 +1,12 @@
+session data --
+    don't have to store everything in a cookie
+    no sensitive data in cookie cause its on the client side
+
+    SessionStore()
+        -sessionData = {} - not persistent - multiple servers add complications
+        -init
+        -new session object : create a new session id
+        -get session object (needs a session id)
+            -change
+        -delete session object (needs a session id)
+-.
