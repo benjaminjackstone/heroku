@@ -48,7 +48,7 @@ class Bank:
                 values[2] = (data.get(key)[0])
             if key == "age":
                 values[3] = data.get(key)[0]
-            if key == "acct_number":S
+            if key == "acct_number":
                 values[4] = data.get(key)[0]
             if key == "balance":
                 values[5] = data.get(key)[0]
