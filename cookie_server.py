@@ -29,9 +29,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             userInfo = user.GetUser(idPath)
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
-            testPass = data["encryptedpass"]
+            testPass = data["password"]
             if userInfo:
-                if bcrypt.verify(testPass[0],userInfo[0]["encryptedpass"]):
+                if bcrypt.verify(testPass[0],userInfo[0]["password"]):
                     print("saved email")
                     self.CookieHeader200()
                     self.wfile.write(bytes(json.dumps(userInfo),"utf-8"))
@@ -48,7 +48,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                     self.header401()
                     return
             self.CookieHeader201()
-            data["encryptedpass"][0] = bcrypt.encrypt(data["encryptedpass"][0])
+            data["password"][0] = bcrypt.encrypt(data["password"][0])
             u = user.AddUser(data)
             self.wfile.write(bytes(u, "utf-8"))
         else:
