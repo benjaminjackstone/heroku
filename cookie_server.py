@@ -73,7 +73,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             matched = False
             allUsers = user.GetUsersByEmail()
             for i in allUsers:
-                print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], self.session, gSesh.sessionData)
+                print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], self.session, "SESSION DATA ", gSesh.sessionData)
                 if gSesh.sessionData[self.session] == i["email"] and i["email"] != "":
                     matched = True
                     break
