@@ -208,6 +208,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def load_session(self):
         self.load_cookie()
+        print("cookie = ", self.cookie)
         # if "!" not in self.cookie:
         if "sessionID" in self.cookie:
             print("COOKIE")

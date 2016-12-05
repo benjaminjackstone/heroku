@@ -12,7 +12,7 @@ class SessionStore:
 		return newSessionId
 
 	def getSession(self, sessionId):
-		print("ESSION STORE AREA: ", sessionData, "id = ", sessionId)
+		print("SESSION STORE AREA: ", sessionData, "id = ", sessionId)
 		if sessionId in self.sessionData:
 			return sessionId
 		else:
