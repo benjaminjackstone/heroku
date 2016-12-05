@@ -209,7 +209,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def load_session(self):
         self.load_cookie()
         # if "!" not in self.cookie:
-        if self.cookie["sessionID"] != "":
+        if "sessionID" in self.cookie:
             print("COOKIE")
             # try to load the session object using the ID
             self.session = gSesh.getSession(self.cookie["sessionID"].value)
