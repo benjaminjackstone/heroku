@@ -46,12 +46,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             print(ids, "IDS")
             for i in ids:
                 print(i, "i")
-                if i["email"] == data["email"]:
+                if i["email"] == data["email"][0]:
                     self.header401()
                     return
             self.CookieHeader201()
-            print(data, "DATA")
-            data["password"] = bcrypt.encrypt(data["password"])
+            data["password"][0] = bcrypt.encrypt(data["password"][0])
             u = user.AddUser(data)
             self.wfile.write(bytes(u, "utf-8"))
         else:
