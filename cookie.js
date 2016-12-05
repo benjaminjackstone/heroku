@@ -73,7 +73,7 @@ var signIn = function(success, failure){
   request.open("POST", "https://deploy-my-app.herokuapp.com/users/"+email);
   request.withCredentials = true;
   request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  request.send("email="+email+"&encryptedpass="+password);
+  request.send("email="+email+"&password="+password);
 };
 
 function InitialGet(){
@@ -117,5 +117,5 @@ var addUser = function (success, failure){
     post.open("POST", "https://deploy-my-app.herokuapp.com/users");
     post.withCredentials = true;
     post.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    post.send("email="+email+"&encryptedpass="+password+"&fname="+fname+"&lname="+lname);
+    post.send("email="+email+"&password="+password+"&fname="+fname+"&lname="+lname);
 };
