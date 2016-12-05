@@ -7,6 +7,7 @@ class CookieJar:
         self.session = session
         self.cookielist[self.session] = cookie
     def GetCookie(self):
+        print(self.cookielist)
         return self.cookielist[self.session]
     def IsThereCookies(self):
         if len(self.cookielist) > 0:
