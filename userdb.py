@@ -1,4 +1,4 @@
-import os
+import od
 import sqlite3
 import json
 import psycopg2
@@ -9,7 +9,7 @@ class UserDB:
 
     def __init__(self):
         urllib.parse.uses_netloc.append("postgres")
-        url = urllib.parse.urlparse(os.environ["users.db"])
+        url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
 
         self.connection = psycopg2.connect(
             cursor_factory=psycopg2.extras.RealDictCursor,
