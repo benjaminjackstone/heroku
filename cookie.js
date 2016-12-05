@@ -94,7 +94,7 @@ function InitialGet(){
       }
     }
   };
-request.open("GET", "https://deploy-my-app.herokuapp.com/customers", true);
+request.open("GET", "https://deploy-my-app.herokuapp.com/////", true);
 request.withCredentials = true;
 request.send();
 };
