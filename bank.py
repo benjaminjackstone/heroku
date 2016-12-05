@@ -117,6 +117,7 @@ class Bank:
 
     def updateCustomer(self, path, data):
         cid = self.getPath(path)
+        print(cid, data, path)
         values = self.parseDict(data)
         print(values, "HELLO...................................")
         # connection = sqlite3.connect("bankDB.db")
