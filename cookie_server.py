@@ -248,8 +248,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             cookie.load(sessionInfo)
             self.cookie = cookie
         else:
-            print("No cookie in headers")
             self.cookie = cookies.SimpleCookie()
+            print("No cookie in headers", self.cookie)
         #     self.cookie["!"] = ""
 
     def send_cookie(self):
