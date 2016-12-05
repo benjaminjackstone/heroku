@@ -23,7 +23,7 @@ Register_Button.onclick = function(){
       lname.value = "";
       document.getElementById("login").style.display = "initial";
       document.getElementById("registerdiv").style.display = "none";
-      title.innerText = "Sign In";
+    //   title.innerText = "Sign In";
     },function(){
       alert("had issues registering");
     })
@@ -33,7 +33,7 @@ Register_Button.onclick = function(){
 register.onclick = function() {
     document.getElementById("login").style.display = "none";
     document.getElementById("registerdiv").style.display = "initial";
-    title.innerText = "Register";
+    // title.innerText = "Register";
 };
 
 Sign_In_Button.onclick = function() {
@@ -49,6 +49,7 @@ Sign_In_Button.onclick = function() {
             document.getElementById("wrapper").style.display = "block";
             document.getElementById("login").style.display = "none";
             document.getElementById("registerdiv").style.display = "none";
+            alert("WELCOME BACK, "+ email);
             //InitialGet();
         }, function(){
             alert("Invalid Username or Password");
