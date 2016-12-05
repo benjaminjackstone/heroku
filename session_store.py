@@ -8,12 +8,12 @@ class SessionStore:
 
 	def createSession(self):
 		newSessionId = self.generateSessionId()
-		self.sessionData[newSessionId] = newSessionId
+		self.sessionData[newSessionId] = {}
 		return newSessionId
 
 	def getSession(self, sessionId):
 		if sessionId in self.sessionData:
-			return sessionId
+			return self.sessionData[sessionId]
 		else:
 			return None
 
