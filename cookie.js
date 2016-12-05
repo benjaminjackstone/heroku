@@ -70,7 +70,7 @@ var signIn = function(success, failure){
       }
     }
   };
-  request.open("POST", "https://deploy-my-app.herokuapp.com/users/"+email);
+  request.open("POST", "https://deploy-my-app.herokuapp.com/sessions");
   request.withCredentials = true;
   request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   request.send("email="+email+"&password="+password);
@@ -115,7 +115,7 @@ var addUser = function (success, failure){
     console.log(fname);
     console.log(lname);
     post.open("POST", "https://deploy-my-app.herokuapp.com/users");
-    post.withCredentials = true;
+    // post.withCredentials = true;
     post.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     post.send("email="+email+"&password="+password+"&fname="+fname+"&lname="+lname);
 };

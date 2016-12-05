@@ -66,7 +66,7 @@ class UserDB:
         return d
 
     def GetUser(self, idPath):
-        personID = self.GetPath(idPath)
+        personID = idPath[0]
         # connection = sqlite3.connect("users.db")
         # self.connection.cursor_factory = self.RowFact
         # cursor = connection.cursor()

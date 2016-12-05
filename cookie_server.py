@@ -18,14 +18,31 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         bank = Bank()
         user = UserDB()
         if self.path.startswith("/customers"):
-            length = self.CookieHeader201()
-            data, count = self.parseInput(length)
-            if count < 6:
-                self.CookieHeader404("MISSING FIELDS. COULDN'T ADD CUSTOMER")
-                return
-            bank.insertCustomer(data)
-        elif self.path.startswith("/users/"):
-            idPath = self.path
+            matched = False
+            allUsers = user.GetUsersByEmail()
+            for i in allUsers:
+                if matched:
+                    break
+                for key in gSesh.sessionData:
+                    # print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], "SELF.SESSION = ", self.session, "SESSION DATA ", gSesh.sessionData[key])
+                    if gSesh.sessionData[key] == i["email"] and i["email"] != "":
+                        matched = True
+                        break
+                    else:
+                        matched = False
+            print(matched)
+            if matched:
+                length = self.CookieHeader201()
+                data, count = self.parseInput(length)
+                if count < 6:
+                    self.CookieHeader404("MISSING FIELDS. COULDN'T ADD CUSTOMER")
+                    return
+                bank.insertCustomer(data)
+            else:
+                self.CookieHeader401()
+
+        elif self.path.startswith("/sessions"):
+            idPath = data["email"]
             userInfo = user.GetUser(idPath)
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
@@ -47,7 +64,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             for i in ids:
                 print(i, "i")
                 if i["email"] == data["email"][0]:
-                    self.header401()
+                    self.HeaderNoCookie422("ALREADY EXISTS")
                     return
             self.CookieHeader201()
             data["password"][0] = bcrypt.encrypt(data["password"][0])
@@ -140,6 +157,15 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.send_cookie()
         self.send_header("Content-Type", "text/plain")
         self.end_headers()
+        
+    def HeaderNoCookie422(self, error):
+        #OK
+        self.send_response(422)
+        self.send_header("Access-Control-Allow-Origin", '*')
+        # self.send_header("Access-Control-Allow-Origin", self.headers["Origin"])
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+        self.wfile.write(bytes("<p>404 "+error+"</p>", "utf-8"))
 
     def HeaderNoCookie204(self):
         #OK
