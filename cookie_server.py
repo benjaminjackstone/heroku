@@ -43,6 +43,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             ids = user.GetUsersByEmail()
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
+            print(ids)
             for i in ids:
                 if i[0] == data["email"][0]:
                     self.header401()
