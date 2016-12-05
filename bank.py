@@ -93,6 +93,7 @@ class Bank:
         self.connection.row_factory = self.dict_factory
         # cursor = connection.cursor()
         self.cursor.execute("SELECT * FROM customers")
+        print('HELLO FROM THE HAWAIIAN ISLANDS')
         rows = self.cursor.fetchall()
         #row factory for tuple into dictionary then into json
         self.connection.close()
