@@ -210,7 +210,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.load_cookie()
         print("cookie = ", self.cookie)
         # if "!" not in self.cookie:
-        if "sessionID" in self.cookie:
+        if self.cookie["sessionID"] != "":
             print("COOKIE")
             # try to load the session object using the ID
             self.session = gSesh.getSession(self.cookie["sessionID"].value)
@@ -228,13 +228,14 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 # store the session ID in a cookie
                 self.cookie["sessionID"] = self.session
         else:
-            print("NO COOKIE")
-            self.cookie = cookies.SimpleCookie()
+            print("NO SESSION ID YET")
+            # self.cookie = cookies.SimpleCookie()
             # create a new session object, save/use it.
             self.session = gSesh.createSession()
             print(self.session, "CREATING SESSION")
             # store the session ID in a cookie
             self.cookie["sessionID"] = self.session
+            print(self.cookie, "is there a cookie now?")
 
     def load_cookie(self):
         # if "Cookie" in self.headers:
@@ -249,8 +250,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.cookie = cookie
         else:
             self.cookie = cookies.SimpleCookie()
-            print("No cookie in headers", self.cookie)
-        #     self.cookie["!"] = ""
+            print("No cookie in headers")
+            self.cookie["sessionID"] = ""
 
     def send_cookie(self):
         for morsel in self.cookie.values():
