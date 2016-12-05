@@ -140,9 +140,9 @@ requestOnLoad.onreadystatechange = function (){
                 }
         }
     };
-requestOnLoad.open("GET", "https://deploy-my-app.herokuapp.com/customers", true);
-requestOnLoad.withCredentials = true;
-requestOnLoad.send();
+// requestOnLoad.open("GET", "https://deploy-my-app.herokuapp.com/customers", true);
+// requestOnLoad.withCredentials = true;
+// requestOnLoad.send();
 
 function printAJAX(item, i){
     var t = document.querySelector("#customerrow");

@@ -88,12 +88,12 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         if name == "customers":
             if rid:
                 # if self.path.startswith("/customers/"):
-                    json_data = bank.getCustomerInfo(self.path)
-                    if json_data != '[]':
-                        self.CookieHeader200()
-                        self.wfile.write(bytes(json_data, "utf-8"))
-                        return
-                    self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
+                json_data = bank.getCustomerInfo(self.path)
+                if json_data != '[]':
+                    self.CookieHeader200()
+                    self.wfile.write(bytes(json_data, "utf-8"))
+                    return
+                self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
             else:
                 matched = False
                 allUsers = user.GetUsersByEmail()
