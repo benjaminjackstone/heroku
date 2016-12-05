@@ -95,13 +95,15 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             #handle customers
             matched = False
             allUsers = user.GetUsersByEmail()
+            int index = 0;
             for i in allUsers:
-                print(i, "session stuff something should = ", gSesh.sessionData[self.session])
-                if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-                    matched = True
-                    break
-                else:
-                    matched = False
+                print(i, "session stuff something should = ", gSesh.sessionData[index].value)
+                # if gSesh.sessionData[self.session] == i[0] and i[0] != "":
+                #     matched = True
+                #     break
+                # else:
+                #     matched = False
+                index += 1
             print(matched)
             if matched:
                 self.CookieHeader200()
