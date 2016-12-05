@@ -140,7 +140,7 @@ requestOnLoad.onreadystatechange = function (){
                 }
         }
     };
-requestOnLoad.open("GET", "http://localhost:8080/customers");
+requestOnLoad.open("GET", "https://deploy-my-app.herokuapp.com/customers", true);
 requestOnLoad.withCredentials = true;
 requestOnLoad.send();
 
@@ -202,7 +202,7 @@ var getCustomer = function() {
 
     };
     //use this function when page loads and when data is updated
-    request.open("GET", "https://deploy-my-app.herokuapp.com/customers");
+    request.open("GET", "https://deploy-my-app.herokuapp.com/customers", true);
     request.withCredentials = true;
     request.send();
 };

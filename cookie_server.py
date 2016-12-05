@@ -84,7 +84,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             else:
                 self.CookieHeader401()
         else:
-            self.CookieHeader404("COLLECTINO NOT FOUND")
+            self.CookieHeader404("COLLECTION NOT FOUND")
 
     def do_DELETE(self):
         self.load_session()
