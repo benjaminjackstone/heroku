@@ -23,7 +23,7 @@ Register_Button.onclick = function(){
       lname.value = "";
       document.getElementById("login").style.display = "initial";
       document.getElementById("registerdiv").style.display = "none";
-      title.innerText = "Sign In";
+    //   title.innerText = "Sign In";
     },function(){
       alert("had issues registering");
     })
@@ -43,13 +43,14 @@ Sign_In_Button.onclick = function() {
         alert("Email and password required for login")
     } else {
         signIn(function(){
-            email.value = "";
-            password.value = "";
             //changed to make success turn on rest of index
             document.getElementById("wrapper").style.display = "block";
             document.getElementById("login").style.display = "none";
             document.getElementById("registerdiv").style.display = "none";
             //InitialGet();
+            alert("WELCOME BACK, "+ email);
+            email.value = "";
+            password.value = "";
         }, function(){
             alert("Invalid Username or Password");
             console.log("Couldn't log in");
@@ -70,7 +71,7 @@ var signIn = function(success, failure){
       }
     }
   };
-  request.open("POST", "https://deploy-my-app.herokuapp.com/users/"+email);
+  request.open("POST", "http://localhost:8080/sessions", true);
   request.withCredentials = true;
   request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   request.send("email="+email+"&password="+password);
@@ -94,7 +95,7 @@ function InitialGet(){
       }
     }
   };
-request.open("GET", "https://deploy-my-app.herokuapp.com/customers", true);
+request.open("GET", "http://localhost:8080/customers");
 request.withCredentials = true;
 request.send();
 };
@@ -114,8 +115,8 @@ var addUser = function (success, failure){
     console.log(password);
     console.log(fname);
     console.log(lname);
-    post.open("POST", "https://deploy-my-app.herokuapp.com/users");
-    post.withCredentials = true;
+    post.open("POST", "http://localhost:8080/users");
+    // post.withCredentials = true;
     post.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     post.send("email="+email+"&password="+password+"&fname="+fname+"&lname="+lname);
 };
