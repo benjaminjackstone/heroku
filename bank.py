@@ -69,7 +69,7 @@ class Bank:
 
     def getIDS(self):
         # connection = sqlite3.connect("bankDB.db")
-        self.connection.row_factory = self.dict_factory
+        # self.connection.row_factory = self.dict_factory
         # cursor = self.connection.cursor()
         self.cursor.execute("SELECT ID FROM customers")
         rows = self.cursor.fetchall()
@@ -80,7 +80,7 @@ class Bank:
     def getCustomerInfo(self, path):
         cid = self.getPath(path)
         # connection = sqlite3.connect("bankDB.db")
-        self.connection.row_factory = self.dict_factory
+        # self.connection.row_factory = self.dict_factory
         # self.cursor = self.connection.cursor()
         self.cursor.execute("SELECT * FROM customers WHERE ID = (%s)", (cid,))
         rows = self.cursor.fetchall()
@@ -90,7 +90,7 @@ class Bank:
 
     def getAllCustomers(self):
         # connection = sqlite3.connect("bankDB.db")
-        self.connection.row_factory = self.dict_factory
+        # self.connection.row_factory = self.dict_factory
         # cursor = connection.cursor()
         self.cursor.execute("SELECT * FROM customers")
         print('HELLO FROM THE HAWAIIAN ISLANDS')
@@ -104,7 +104,7 @@ class Bank:
         cid = self.getPath(path)
         print("IS IT FREAKING DELETING?.................................")
         # connection = sqlite3.connect("bankDB.db")
-        self.connection.row_factory = self.dict_factory
+        # self.connection.row_factory = self.dict_factory
         # cursor = connection.cursor()
         self.cursor.execute("DELETE FROM customers WHERE ID = (%s)", (cid,))
         self.connection.commit()
@@ -118,7 +118,7 @@ class Bank:
         values = self.parseDict(data)
         print(values, "HELLO...................................")
         # connection = sqlite3.connect("bankDB.db")
-        self.connection.row_factory = self.dict_factory
+        # self.connection.row_factory = self.dict_factory
         # cursor = connection.cursor()
         self.cursor.execute("UPDATE customers SET fname=%s,lname=%s,age=%s,acct_number=%s,"
                        "balance=%s,acct_type=%s,phone_number=%s WHERE ID =%s",
@@ -134,7 +134,7 @@ class Bank:
         print(customer, "ADDING NEW CUSTOMER")
         customer = self.parseDict(customer)
         # connection = sqlite3.connect("bankDB.db")
-        self.connection.row_factory = self.dict_factory
+        # self.connection.row_factory = self.dict_factory
         # cursor = connection.cursor()
         self.cursor.execute("INSERT INTO customers(fname, lname,age,acct_number,balance,acct_type,phone_number, time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",
                        (customer[1], customer[2], customer[3],
