@@ -50,7 +50,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                     self.header401()
                     return
             self.CookieHeader201()
-            print(data, "DATA", data["password"])
+            print(data, "DATA")
             data["password"] = bcrypt.encrypt(data["password"])
             u = user.AddUser(data)
             self.wfile.write(bytes(u, "utf-8"))
