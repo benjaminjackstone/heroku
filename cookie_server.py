@@ -1,4 +1,3 @@
-import sys
 from http import cookies
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from session_store import SessionStore
@@ -28,9 +27,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             userInfo = user.GetUser(idPath)
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
-            testPass = data["password"]
+            testPass = data["encryptedpass"]
             if userInfo:
-                if bcrypt.verify(testPass[0],userInfo[0]["password"]):
+                if bcrypt.verify(testPass[0],userInfo[0]["encryptedpass"]):
                     print("saved email")
                     self.CookieHeader200()
                     self.wfile.write(bytes(json.dumps(userInfo),"utf-8"))
@@ -47,7 +46,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                     self.header401()
                     return
             self.CookieHeader201()
-            data["password"][0] = bcrypt.encrypt(data["password"][0])
+            data["encryptedpass"][0] = bcrypt.encrypt(data["encryptedpass"][0])
             u = user.AddUser(data)
             self.wfile.write(bytes(u, "utf-8"))
         else:
@@ -58,14 +57,14 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.load_session()
         bank = Bank()
         user = UserDB()
-        if self.path.startswith("customers"):
+        if self.path.startswith("/customers/"):
             json_data = bank.getCustomerInfo(self.path)
             if json_data != '[]':
                 self.CookieHeader200()
                 self.wfile.write(bytes(json_data, "utf-8"))
                 return
             self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
-        elif self.path.startswith("customers"):
+        elif self.path.startswith("/customers"):
             #handle customers
             matched = False
             allUsers = user.GetUsersByEmail()
