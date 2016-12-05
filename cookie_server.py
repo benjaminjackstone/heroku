@@ -208,7 +208,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def load_session(self):
         self.load_cookie()
-        if "!" not in self.cookie:
+        # if "!" not in self.cookie:
+        if self.cookie["sessionID"] != "":
             print("COOKIE")
             # try to load the session object using the ID
             self.session = gSesh.getSession(self.cookie["sessionID"].value)
@@ -236,15 +237,19 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def load_cookie(self):
         if "Cookie" in self.headers:
-            print("cookie in headers")
-            cookie = cookies.SimpleCookie()
-            sessionInfo = self.headers["Cookie"]
-            cookie.load(sessionInfo)
-            self.cookie = cookie
+            self.cookie = cookies.SimpleCookie(self.headers["Cookie"])
         else:
-            print("No cookie in headers")
             self.cookie = cookies.SimpleCookie()
-            self.cookie["!"] = ""
+        # if "Cookie" in self.headers:
+        #     print("cookie in headers")
+        #     cookie = cookies.SimpleCookie()
+        #     sessionInfo = self.headers["Cookie"]
+        #     cookie.load(sessionInfo)
+        #     self.cookie = cookie
+        # else:
+        #     print("No cookie in headers")
+        #     self.cookie = cookies.SimpleCookie()
+        #     self.cookie["!"] = ""
 
     def send_cookie(self):
         for morsel in self.cookie.values():
