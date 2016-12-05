@@ -1,1 +1,1 @@
-web: python3 cookie_server.py $PORT
+web: python cookie_server.py $PORT
