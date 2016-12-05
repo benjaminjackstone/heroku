@@ -13,37 +13,24 @@ gUser = ""
 gCookiejar = CookieJar()
 class MyRequestHandler(BaseHTTPRequestHandler):
 
-    def parsePath(self):
-        if self.path.startswith("/"):
-            parts = self.path[1:].split("/")
-            resourceName = parts[0]
-            resourceId = None
-            if len(parts) > 1:
-                resourceId = parts[1]
-            return (resourceName, resourceId)
-        return False
-
     def do_POST(self):
         self.load_session()
         bank = Bank()
         user = UserDB()
-        name, rid = self.parsePath()
-        if name == "customers":
-        # if self.path.startswith("/customers"):
+        if self.path.startswith("/customers"):
             length = self.CookieHeader201()
             data, count = self.parseInput(length)
             if count < 6:
                 self.CookieHeader404("MISSING FIELDS. COULDN'T ADD CUSTOMER")
                 return
             bank.insertCustomer(data)
-        elif name == "users":
-        # elif self.path.startswith("/users/"):
+        elif self.path.startswith("/users/"):
             idPath = self.path
             userInfo = user.GetUser(idPath)
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
             testPass = data["encryptedpass"]
-            if userInfo and rid:
+            if userInfo:
                 if bcrypt.verify(testPass[0],userInfo[0]["encryptedpass"]):
                     print("saved email")
                     self.CookieHeader200()
@@ -52,30 +39,18 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                     print(gSesh.sessionData)
                 else:
                     self.CookieHeader401()
-            else:
-                ids = user.GetUsersByEmail()
-                length = int(self.headers['Content-Length'])
-                data, amount = self.parseInput(length)
-                for i in ids:
-                    if i[0] == data["email"][0]:
-                        self.header401()
-                        return
-                self.CookieHeader201()
-                data["encryptedpass"][0] = bcrypt.encrypt(data["encryptedpass"][0])
-                u = user.AddUser(data)
-                self.wfile.write(bytes(u, "utf-8"))
-        # elif self.path.startswith("/users"):
-            # ids = user.GetUsersByEmail()
-            # length = int(self.headers['Content-Length'])
-            # data, amount = self.parseInput(length)
-            # for i in ids:
-            #     if i[0] == data["email"][0]:
-            #         self.header401()
-            #         return
-            # self.CookieHeader201()
-            # data["encryptedpass"][0] = bcrypt.encrypt(data["encryptedpass"][0])
-            # u = user.AddUser(data)
-            # self.wfile.write(bytes(u, "utf-8"))
+        elif self.path.startswith("/users"):
+            ids = user.GetUsersByEmail()
+            length = int(self.headers['Content-Length'])
+            data, amount = self.parseInput(length)
+            for i in ids:
+                if i[0] == data["email"][0]:
+                    self.header401()
+                    return
+            self.CookieHeader201()
+            data["encryptedpass"][0] = bcrypt.encrypt(data["encryptedpass"][0])
+            u = user.AddUser(data)
+            self.wfile.write(bytes(u, "utf-8"))
         else:
             self.CookieHeader404("NOT FOUND")
 
@@ -84,53 +59,32 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.load_session()
         bank = Bank()
         user = UserDB()
-        name, rid = self.parsePath()
-        print(name, "name", rid, "resource id")
-        if name == "customers":
-            if rid:
-                # if self.path.startswith("/customers/"):
-                json_data = bank.getCustomerInfo(self.path)
-                if json_data != '[]':
-                    self.CookieHeader200()
-                    self.wfile.write(bytes(json_data, "utf-8"))
-                    return
-                self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
-            else:
-                matched = False
-                allUsers = user.GetUsersByEmail()
-                for i in allUsers:
-                    if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-                        matched = True
-                        break
-                    else:
-                        matched = False
-                print(matched)
-                if matched:
-                    self.CookieHeader200()
-                    json_data = bank.getAllCustomers()
-                    self.wfile.write(bytes(json_data, "utf-8"))
-                else:
-                    self.CookieHeader401()
-        # elif self.path.startswith("/customers"):
-
+        if self.path.startswith("/customers/"):
+            json_data = bank.getCustomerInfo(self.path)
+            if json_data != '[]':
+                self.CookieHeader200()
+                self.wfile.write(bytes(json_data, "utf-8"))
+                return
+            self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
+        elif self.path.startswith("/customers"):
             #handle customers
-            # matched = False
-            # allUsers = user.GetUsersByEmail()
-            # for i in allUsers:
-            #     if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-            #         matched = True
-            #         break
-            #     else:
-            #         matched = False
-            # print(matched)
-            # if matched:
-            #     self.CookieHeader200()
-            #     json_data = bank.getAllCustomers()
-            #     self.wfile.write(bytes(json_data, "utf-8"))
-            # else:
-            #     self.CookieHeader401()
+            matched = False
+            allUsers = user.GetUsersByEmail()
+            for i in allUsers:
+                if gSesh.sessionData[self.session] == i[0] and i[0] != "":
+                    matched = True
+                    break
+                else:
+                    matched = False
+            print(matched)
+            if matched:
+                self.CookieHeader200()
+                json_data = bank.getAllCustomers()
+                self.wfile.write(bytes(json_data, "utf-8"))
+            else:
+                self.CookieHeader401()
         else:
-            self.CookieHeader404("COLLECTION WAS NOT FOUND")
+            self.CookieHeader404("COLLECTION NOT FOUND")
 
     def do_DELETE(self):
         self.load_session()
@@ -261,9 +215,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             else:
                 # create a new session object, save/use it.
                 print("Created new session")
-                print("hello")
                 self.session = gSesh.createSession()
-                print("hello")
                 gSesh.sessionData[self.session] = ""
                 # store the session ID in a cookie
                 self.cookie["sessionID"] = self.session
@@ -277,11 +229,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def load_cookie(self):
         if "Cookie" in self.headers:
+            print("cookie in headers")
             cookie = cookies.SimpleCookie()
             sessionInfo = self.headers["Cookie"]
             cookie.load(sessionInfo)
             self.cookie = cookie
-            print("cookie in headers")
         else:
             print("No cookie in headers")
             self.cookie = cookies.SimpleCookie()
