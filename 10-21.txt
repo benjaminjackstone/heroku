@@ -1,0 +1,39 @@
+from http.server import BaseHTTPRequestHandler. HTTPServer
+import json
+import random
+import sqlite3
+import "databasefile"
+
+#most of the database stuff(cursor etc...) will go inside the get and post methods
+#the connection will go in the main or run funciton but if the connection disappears theres no way to determine but it will establish a clean connection each time
+#or you can connect and close only when you need it
+#make new methods for different actions or handling of actions
+#regex, split, join -- string manipulation
+
+class SquirrelSErver(BaseHTTPRequestHandler):
+	def do_OPTIONS(self):
+		pass
+	
+	def do_GET(self):
+		if self.path.startwith("/A):
+			#handle pathA
+		elif self.path.startwith("/B"):
+			#handle pathB
+		else:
+			#handle 404
+
+	def do_POST(self):
+		pass
+
+	def do_PUT(self):
+		pass
+
+	def do_DELETE(self):
+		pass
+
+	def getSquirrel(self):
+		db = SquirreldB()
+		squirrels = db.getSquirrels()
+
+def Run():
+	pass

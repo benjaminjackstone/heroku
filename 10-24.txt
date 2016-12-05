@@ -1,0 +1,14 @@
+***Assignment***
+
+CORS
+-----
+
+
+a browser is the USER AGENT. its acting on behalf of the user.
+
+this all boils down to user security
+
+CORS is a pre-flighted request. this implies that all checks are met and the action will complete and return
+	this happens anytime the request is not a simple request
+	OPTIONS method.  which is in the assignment	
+		send metadata. is request ok? if not i will terminate now

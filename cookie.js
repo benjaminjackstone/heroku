@@ -114,7 +114,7 @@ var addUser = function (success, failure){
     console.log(password);
     console.log(fname);
     console.log(lname);
-    post.open("POST", "https://deploy-my-app.herokuapp.com");
+    post.open("POST", "https://deploy-my-app.herokuapp.com/users");
     post.withCredentials = true;
     post.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     post.send("email="+email+"&encryptedpass="+password+"&fname="+fname+"&lname="+lname);

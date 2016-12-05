@@ -1,0 +1,11 @@
+client for the database
+
+readme.md (markdown)
+
+rest endpoints -- retrieve, list, create, etc...
+
+-----------------------CLIENT-------------------
+
+------------HTML TEMPLATE--------------
+
+i can use classes as an identifier that you can use to add to html
