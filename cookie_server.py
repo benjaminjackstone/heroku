@@ -1,3 +1,4 @@
+
 import sys
 from http import cookies
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -17,31 +18,18 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         bank = Bank()
         user = UserDB()
         if self.path.startswith("/customers"):
-            matched = False
-            allUsers = user.GetUsersByEmail()
-            for i in allUsers:
-                if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-                    matched = True
-                    break
-                else:
-                    matched = False
-            print(matched)
-            if matched:
-                length = self.CookieHeader201()
-                data, count = self.parseInput(length)
-                if count < 6:
-                    self.CookieHeader404("MISSING FIELDS. COULDN'T ADD CUSTOMER")
-                    return
-                bank.insertCustomer(data)
-            else:
-                self.CookieHeader401()
-        elif self.path.startswith("/sessions"):
+            length = self.CookieHeader201()
+            data, count = self.parseInput(length)
+            if count < 6:
+                self.CookieHeader404("MISSING FIELDS. COULDN'T ADD CUSTOMER")
+                return
+            bank.insertCustomer(data)
+        elif self.path.startswith("/users/"):
+            idPath = self.path
+            userInfo = user.GetUser(idPath)
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
             testPass = data["password"]
-            idPath = data["email"]
-            print(idPath)
-            userInfo = user.GetUser(idPath)
             if userInfo:
                 if bcrypt.verify(testPass[0],userInfo[0]["password"]):
                     print("saved email")
@@ -55,9 +43,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             ids = user.GetUsersByEmail()
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
+            print(ids, "IDS")
             for i in ids:
-                if i[0] == data["email"][0]:
-                    self.HeaderNoCookie422("ALREADY EXISTS")
+                print(i, "i")
+                if i["email"] == data["email"][0]:
+                    self.header401()
                     return
             self.CookieHeader201()
             data["password"][0] = bcrypt.encrypt(data["password"][0])
@@ -72,40 +62,23 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         bank = Bank()
         user = UserDB()
         if self.path.startswith("/customers/"):
-            matched = False
-            allUsers = user.GetUsersByEmail()
-            for i in allUsers:
-                if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-                    matched = True
-                    break
-                else:
-                    matched = False
-            print(matched)
-            if matched:
-                json_data = bank.getCustomerInfo(self.path)
-                if json_data != '[]':
-                    self.CookieHeader200()
-                    self.wfile.write(bytes(json_data, "utf-8"))
-                    return
-                self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
-            else:
-                self.CookieHeader401()
-
+            json_data = bank.getCustomerInfo(self.path)
+            if json_data != '[]':
+                self.CookieHeader200()
+                self.wfile.write(bytes(json_data, "utf-8"))
+                return
+            self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
         elif self.path.startswith("/customers"):
             #handle customers
             matched = False
             allUsers = user.GetUsersByEmail()
-            index = 0;
             for i in allUsers:
-                for key in gSesh.sessionData:
-
-                    print(i, "session stuff something should = ", gSesh.sessionData, "self.session = ", self.session)
-                # if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-                #     matched = True
-                #     break
-                # else:
-                #     matched = False
-                index += 1
+                print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], "SELF.SESSION = ", self.session, "SESSION DATA ", gSesh.sessionData)
+                if gSesh.sessionData[self.session] == i["email"] and i["email"] != "":
+                    matched = True
+                    break
+                else:
+                    matched = False
             print(matched)
             if matched:
                 self.CookieHeader200()
@@ -114,28 +87,15 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             else:
                 self.CookieHeader401()
         else:
-            self.CookieHeader404("COLLECTINO NOT FOUND")
+            self.CookieHeader404("COLLECTION NOT FOUND")
 
     def do_DELETE(self):
         self.load_session()
         bank = Bank()
         if self.path.startswith("/customers/"):
-            matched = False
-            allUsers = user.GetUsersByEmail()
-            for i in allUsers:
-                if gSesh.sessionData[self.session] == i[0] and i[0] != "":
-                    matched = True
-                    break
-                else:
-                    matched = False
-            print(matched)
-            if matched:
-                print("JAVASCRIPT DO_DELETE...................")
-                bank.deleteCustomer(self.path)
-                self.HeaderNoCookie200()
-            else:
-                self.CookieHeader401()
-
+            print("JAVASCRIPT DO_DELETE...................")
+            bank.deleteCustomer(self.path)
+            self.HeaderNoCookie200()
         else:
             self.CookieHeader404("COLLECTION NOT FOUND")
 
@@ -168,14 +128,6 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", '*')
         self.send_header("Content-Type", "text/plain")
         self.end_headers()
-    def HeaderNoCookie422(self, error):
-        #OK
-        self.send_response(422)
-        self.send_header("Access-Control-Allow-Origin", '*')
-        # self.send_header("Access-Control-Allow-Origin", self.headers["Origin"])
-        self.send_header("Content-Type", "text/plain")
-        self.end_headers()
-        self.wfile.write(bytes("<p>404 "+error+"</p>", "utf-8"))
 
     def CookieHeader200(self):
         #OK
@@ -275,6 +227,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.cookie = cookies.SimpleCookie()
             # create a new session object, save/use it.
             self.session = gSesh.createSession()
+            print(self.session, "CREATING SESSION")
             # store the session ID in a cookie
             self.cookie["sessionID"] = self.session
 
