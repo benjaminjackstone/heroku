@@ -68,10 +68,11 @@ class UserDB:
     def GetUser(self, idPath):
         personID = self.GetPath(idPath)
         # connection = sqlite3.connect("users.db")
-        self.connection.row_factory = self.RowFact
+        # self.connection.cursor_factory = self.RowFact
         # cursor = connection.cursor()
         self.cursor.execute("SELECT * FROM users WHERE email = (%s)", (personID,))
         rows = self.cursor.fetchall()
+        print(rows)
         self.connection.close()
         return rows
 
@@ -87,7 +88,7 @@ class UserDB:
     def AddUser(self,UserInfo):
         UserInfo = self.ParseDictionary(UserInfo)
         # connection = sqlite3.connect("users.db")
-        self.connection.row_factory = self.RowFact
+        # self.connection.row_factory = self.RowFact
         # cursor = connection.cursor()
         print(UserInfo)
         self.cursor.execute("INSERT INTO users (email,password,fname,lname) VALUES (%s,%s,%s,%s)",(UserInfo[0],UserInfo[1],UserInfo[2],UserInfo[3]))
