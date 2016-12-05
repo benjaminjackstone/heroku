@@ -206,6 +206,7 @@ var getCustomer = function() {
     request.withCredentials = true;
     request.send();
 };
+
 var addCustomer = function() {
     var request  = new XMLHttpRequest();
     request.onreadystatechange = function (){
