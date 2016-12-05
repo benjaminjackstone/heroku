@@ -45,7 +45,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             data, amount = self.parseInput(length)
             print(ids, "IDS")
             for i in ids:
-                if i[0] == data["email"]:
+                print(i, "i")
+                if i["email"] == data["email"]:
                     self.header401()
                     return
             self.CookieHeader201()
