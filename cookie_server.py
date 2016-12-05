@@ -237,19 +237,19 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.cookie["sessionID"] = self.session
 
     def load_cookie(self):
-        if "Cookie" in self.headers:
-            self.cookie = cookies.SimpleCookie(self.headers["Cookie"])
-        else:
-            self.cookie = cookies.SimpleCookie()
         # if "Cookie" in self.headers:
-        #     print("cookie in headers")
-        #     cookie = cookies.SimpleCookie()
-        #     sessionInfo = self.headers["Cookie"]
-        #     cookie.load(sessionInfo)
-        #     self.cookie = cookie
+        #     self.cookie = cookies.SimpleCookie(self.headers["Cookie"])
         # else:
-        #     print("No cookie in headers")
         #     self.cookie = cookies.SimpleCookie()
+        if "Cookie" in self.headers:
+            print("cookie in headers")
+            cookie = cookies.SimpleCookie()
+            sessionInfo = self.headers["Cookie"]
+            cookie.load(sessionInfo)
+            self.cookie = cookie
+        else:
+            print("No cookie in headers")
+            self.cookie = cookies.SimpleCookie()
         #     self.cookie["!"] = ""
 
     def send_cookie(self):
