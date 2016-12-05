@@ -73,13 +73,15 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             matched = False
             allUsers = user.GetUsersByEmail()
             for i in allUsers:
-                for key in gSesh.sessionData:
-                    print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], "SELF.SESSION = ", self.session, "SESSION DATA ", gSesh.sessionData[key])
-                if gSesh.sessionData[self.session] == i["email"] and i["email"] != "":
-                    matched = True
+                if matched:
                     break
-                else:
-                    matched = False
+                for key in gSesh.sessionData:
+                    # print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], "SELF.SESSION = ", self.session, "SESSION DATA ", gSesh.sessionData[key])
+                    if gSesh.sessionData[key] == i["email"] and i["email"] != "":
+                        matched = True
+                        break
+                    else:
+                        matched = False
             print(matched)
             if matched:
                 self.CookieHeader200()
