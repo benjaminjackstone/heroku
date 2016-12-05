@@ -85,6 +85,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         bank = Bank()
         user = UserDB()
         name, rid = self.parsePath()
+        print(name, "name", rid, "resource id")
         if name == "customers":
             if rid:
                 # if self.path.startswith("/customers/"):
