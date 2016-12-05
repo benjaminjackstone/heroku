@@ -242,6 +242,8 @@ var updateCustomer = function() {
             }
         }
     };
+    console.log(currcustomer['ID']);
+    console.log(currcustomer['id']);
     request.open("PUT", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['ID'], true);
     // request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
