@@ -227,6 +227,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             self.cookie = cookies.SimpleCookie()
             # create a new session object, save/use it.
             self.session = gSesh.createSession()
+            print(self.session, "CREATING SESSION")
             # store the session ID in a cookie
             self.cookie["sessionID"] = self.session
 
