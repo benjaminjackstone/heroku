@@ -42,11 +42,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 self.CookieHeader401()
 
         elif self.path.startswith("/sessions"):
-            idPath = data["email"]
-            userInfo = user.GetUser(idPath)
             length = int(self.headers['Content-Length'])
             data, amount = self.parseInput(length)
+            idPath = data["email"]
             testPass = data["password"]
+            userInfo = user.GetUser(idPath)
             if userInfo:
                 if bcrypt.verify(testPass[0],userInfo[0]["password"]):
                     print("saved email")
@@ -157,7 +157,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.send_cookie()
         self.send_header("Content-Type", "text/plain")
         self.end_headers()
-        
+
     def HeaderNoCookie422(self, error):
         #OK
         self.send_response(422)
