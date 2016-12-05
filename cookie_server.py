@@ -66,7 +66,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(bytes(json_data, "utf-8"))
                 return
             self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
-        elif self.path.startswith("/"):
+        elif self.path.startswith("/customers"):
             #handle customers
             matched = False
             allUsers = user.GetUsersByEmail()
