@@ -242,9 +242,7 @@ var updateCustomer = function() {
             }
         }
     };
-    console.log(currcustomer['ID']);
-    console.log(currcustomer['id']);
-    request.open("PUT", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['ID'], true);
+    request.open("PUT", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['id'], true);
     // request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send("fname="+currcustomer['fname']+'&lname='+currcustomer['lname']+'&age='+currcustomer['age']+'&phone_number='+currcustomer['phone_number']+'&acct_number='+currcustomer['acct_number']+'&acct_type='+currcustomer['acct_type']+'&balance='+currcustomer['balance']);
@@ -264,7 +262,7 @@ var deleteCustomer = function() {
             }
         }
     };
-    request.open("DELETE", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['ID'], true);
+    request.open("DELETE", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['id'], true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send();
 
