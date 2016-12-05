@@ -202,7 +202,7 @@ var getCustomer = function() {
 
     };
     //use this function when page loads and when data is updated
-    request.open("GET", "http://localhost:8080/customers");
+    request.open("GET", "https://deploy-my-app.herokuapp.com/customers");
     request.withCredentials = true;
     request.send();
 };
@@ -222,7 +222,7 @@ var addCustomer = function() {
             }
         }
     };
-    request.open("POST", "http://localhost:8080/customers", true);
+    request.open("POST", "https://deploy-my-app.herokuapp.com/customers", true);
     request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send("fname="+currcustomer['fname']+'&lname='+currcustomer['lname']+'&age='+currcustomer['age']+'&phone_number='+currcustomer['phone_number']+'&acct_number='+currcustomer['acct_number']+'&acct_type='+currcustomer['acct_type']+'&balance='+currcustomer['balance']);
@@ -242,7 +242,7 @@ var updateCustomer = function() {
             }
         }
     };
-    request.open("PUT", "http://localhost:8080/customers/"+currcustomer['ID'], true);
+    request.open("PUT", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['ID'], true);
     // request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send("fname="+currcustomer['fname']+'&lname='+currcustomer['lname']+'&age='+currcustomer['age']+'&phone_number='+currcustomer['phone_number']+'&acct_number='+currcustomer['acct_number']+'&acct_type='+currcustomer['acct_type']+'&balance='+currcustomer['balance']);
@@ -262,7 +262,7 @@ var deleteCustomer = function() {
             }
         }
     };
-    request.open("DELETE", "http://localhost:8080/customers/"+currcustomer['ID'], true);
+    request.open("DELETE", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['ID'], true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send();
 

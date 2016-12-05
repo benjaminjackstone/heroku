@@ -58,14 +58,14 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.load_session()
         bank = Bank()
         user = UserDB()
-        if self.path.startswith("https://deploy-my-app.herokuapp.com/customers/"):
+        if self.path.startswith("customers"):
             json_data = bank.getCustomerInfo(self.path)
             if json_data != '[]':
                 self.CookieHeader200()
                 self.wfile.write(bytes(json_data, "utf-8"))
                 return
             self.CookieHeader404("COULDN'T LOCATE THIS RESOURCE")
-        elif self.path.startswith("https://deploy-my-app.herokuapp.com/customers"):
+        elif self.path.startswith("customers"):
             #handle customers
             matched = False
             allUsers = user.GetUsersByEmail()
