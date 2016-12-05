@@ -277,11 +277,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def load_cookie(self):
         if "Cookie" in self.headers:
-            print("cookie in headers")
             cookie = cookies.SimpleCookie()
             sessionInfo = self.headers["Cookie"]
             cookie.load(sessionInfo)
             self.cookie = cookie
+            print("cookie in headers")
         else:
             print("No cookie in headers")
             self.cookie = cookies.SimpleCookie()
