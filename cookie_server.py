@@ -227,6 +227,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 gSesh.sessionData[self.session] = ""
                 # store the session ID in a cookie
                 self.cookie["sessionID"] = self.session
+                gCookiejar.SetCookie(self.session, self.cookie)
         else:
             print("NO SESSION ID YET")
             # self.cookie = cookies.SimpleCookie()
