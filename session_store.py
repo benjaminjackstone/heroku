@@ -13,7 +13,7 @@ class SessionStore:
 
 	def getSession(self, sessionId):
 		if sessionId in self.sessionData:
-			return self.sessionData[sessionId]
+			return sessionId
 		else:
 			return None
 
