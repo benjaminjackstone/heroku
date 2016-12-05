@@ -26,7 +26,7 @@ class Bank:
         self.connection.close()
 
     def createCustomersTable(self):
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS customers (ID SERIAL PRIMARY KEY, email VARCHAR(255), fname VARCHAR(255), lname VARCHAR(255), age VARCHAR(255), acct_number VARCHAR(255), balance VARCHAR(255),acct_type VARCHAR(255), time VARCHAR(255))")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS customers (ID SERIAL PRIMARY KEY, email VARCHAR(255), fname VARCHAR(255), lname VARCHAR(255), age VARCHAR(255), acct_number VARCHAR(255), balance VARCHAR(255), phone_number varchar(255),acct_type VARCHAR(255), time VARCHAR(255))")
         self.connection.commit()
 
     def getPath(self, path):
