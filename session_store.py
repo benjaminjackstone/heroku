@@ -7,6 +7,7 @@ class SessionStore:
 		return
 
 	def createSession(self):
+		self.sessionData = {};
 		newSessionId = self.generateSessionId()
 		self.sessionData[newSessionId] = {}
 		return newSessionId
