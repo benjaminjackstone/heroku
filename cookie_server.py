@@ -95,7 +95,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 #     break
                 # for key in gSesh.sessionData:
                     # print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], "SELF.SESSION = ", self.session, "SESSION DATA ", gSesh.sessionData[key])
-                    if gSesh.sessionData[self.session] == i["email"] and i["email"] != "":
+                    if gSesh.sessionData[1] == i["email"] and i["email"] != "":
                     # if gSesh.sessionData[key] == i["email"] and i["email"] != "":
                         matched = True
                         break
