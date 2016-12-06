@@ -54,8 +54,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write(bytes(json.dumps(userInfo),"utf-8"))
                     gSesh.sessionData[self.session] = userInfo[0]["email"]
                     print(gSesh.sessionData)
-                else:
-                    self.CookieHeader401()
+                    return;
+            self.CookieHeader401()
         elif self.path.startswith("/users"):
             ids = user.GetUsersByEmail()
             length = int(self.headers['Content-Length'])
