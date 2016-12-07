@@ -41,24 +41,23 @@
 #REST endpoint methods
 
 1. getCustomer:
-   uri="localhost:8080/customers/{key}"
-   uri="localhost:8080/customers"
+   uri="https://deploy-my-app.herokuapp.com/customers"
    method="do_GET"
 
 2. insertCustomer:
-   rest:uri="localhost:8080/customers"
+   rest:uri="https://deploy-my-app.herokuapp.com/customers"
    rest:method="POST"
 
 3. updateCustomers:
-   rest:uri="localhost:8080/customers/{key}"
+   rest:uri="https://deploy-my-app.herokuapp.com/customers/{key}"
    rest:method="PUT"
 
 4. deleteCustomer:
-   rest:uri="localhost:8080/customers/{key}"
+   rest:uri="https://deploy-my-app.herokuapp.com/customers/{key}"
    rest:method="DELETE"
-5. GetUser:
-   rest:uri="localhost:8080/users/{key}"
-   method = "GET"
+5. SignIn:
+   rest:uri="https://deploy-my-app.herokuapp.com/users/{key}"
+   method = "POST"
 6. AddUser:
-   rest:uri = "localhost:8080/users"
+   rest:uri = "https://deploy-my-app.herokuapp.com/users"
    method= "POST"

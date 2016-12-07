@@ -115,9 +115,26 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.load_session()
         bank = Bank()
         if self.path.startswith("/customers/"):
-            print("JAVASCRIPT DO_DELETE...................")
-            bank.deleteCustomer(self.path)
-            self.HeaderNoCookie200()
+            matched = False
+            allUsers = user.GetUsersByEmail()
+            for i in allUsers:
+                if matched:
+                    break
+                for key in gSesh.sessionData:
+                    # print(i, "I IN SESSION PRINT", gSesh.sessionData[self.session], "SELF.SESSION = ", self.session, "SESSION DATA ", gSesh.sessionData[key])
+                    # if gSesh.sessionData[self.session] == i["email"] and i["email"] != "":
+                    if gSesh.sessionData[key] == i["email"] and i["email"] != "":
+                        matched = True
+                        break
+                    else:
+                        matched = False
+            print(matched)
+            if matched:
+                print("JAVASCRIPT DO_DELETE...................")
+                bank.deleteCustomer(self.path)
+                self.HeaderNoCookie200()
+            else:
+                self.CookieHeader401()
         else:
             self.CookieHeader404("COLLECTION NOT FOUND")
 
