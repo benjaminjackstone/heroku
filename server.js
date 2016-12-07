@@ -262,7 +262,7 @@ var deleteCustomer = function() {
             }
         }
     };
-    request.open("DELETE", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['ID'], true);
+    request.open("DELETE", "https://deploy-my-app.herokuapp.com/customers/"+currcustomer['id'], true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send();
 
