@@ -103,7 +103,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                         matched = False
             print(matched)
             if matched:
-                self.HeaderNoCookie201()
+                self.CookieHeader200()
                 json_data = bank.getAllCustomers()
                 self.wfile.write(bytes(json_data, "utf-8"))
             else:
@@ -132,7 +132,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             if matched:
                 print("JAVASCRIPT DO_DELETE...................")
                 bank.deleteCustomer(self.path)
-                self.CookieHeader200()
+                self.HeaderNoCookie201()
             else:
                 self.CookieHeader401()
         else:
