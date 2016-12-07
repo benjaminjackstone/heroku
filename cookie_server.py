@@ -132,7 +132,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
             if matched:
                 print("JAVASCRIPT DO_DELETE...................")
                 bank.deleteCustomer(self.path)
-                self.HeaderNoCookie200()
+                self.CookieHeader200()
             else:
                 self.CookieHeader401()
         else:
