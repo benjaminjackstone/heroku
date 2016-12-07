@@ -103,7 +103,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                         matched = False
             print(matched)
             if matched:
-                self.CookieHeader200()
+                self.HeaderNoCookie201()
                 json_data = bank.getAllCustomers()
                 self.wfile.write(bytes(json_data, "utf-8"))
             else:
